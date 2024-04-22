@@ -1,0 +1,17 @@
+.sidebar {
+  background-color: #2f4858;
+
+  grid-area: side;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 1rem;
+
+  .active-link {
+    background-color: #daf7dc;
+    color: #000000;
+    font-weight: bold;
+  }
+}

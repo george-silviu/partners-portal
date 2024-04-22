@@ -1,19 +1,46 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
+
+import { List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import GroupIcon from "@mui/icons-material/Group";
+
+import "./sidebar.styles.scss";
 
 const Sidebar = () => {
   return (
-    <div
-      className="sidebar"
-      style={{
-        backgroundColor: "blue",
-        width: "200px",
-        height: "100%",
-        position: "fixed",
-        top: "0",
-        left: "0",
-        zIndex: "1",
-      }}
-    ></div>
+    <section className="sidebar">
+      <h2 style={{ textAlign: "center", color: "#9EE493" }}>
+        Lead management app
+      </h2>
+      <List style={{ marginTop: "30px" }}>
+        <ListItem
+          button
+          component={NavLink}
+          to="/dashboard"
+          style={{ color: "#9EE493" }}
+          activeClassName="active-link"
+        >
+          <ListItemIcon style={{ minWidth: "40px" }}>
+            <DashboardIcon style={{ color: "#9EE493" }} />
+          </ListItemIcon>
+          <ListItemText primary="Dashboard" />
+        </ListItem>
+
+        <ListItem
+          button
+          component={NavLink}
+          to="/partners"
+          style={{ color: "#9EE493" }}
+          activeClassName="active-link"
+        >
+          <ListItemIcon style={{ minWidth: "40px" }}>
+            <GroupIcon style={{ color: "#9EE493" }} />
+          </ListItemIcon>
+          <ListItemText primary="Partners" />
+        </ListItem>
+      </List>
+    </section>
   );
 };
 
