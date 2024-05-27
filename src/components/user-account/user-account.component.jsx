@@ -7,6 +7,8 @@ import { MenuButton as BaseMenuButton } from "@mui/base/MenuButton";
 import { MenuItem as BaseMenuItem, menuItemClasses } from "@mui/base/MenuItem";
 import { styled } from "@mui/system";
 
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
+
 export default function UserAccount() {
   const navigate = useNavigate();
 
@@ -22,7 +24,9 @@ export default function UserAccount() {
 
   return (
     <Dropdown>
-      <MenuButton>My account</MenuButton>
+      <MenuButton>
+        <AccountBoxIcon />
+      </MenuButton>
       <Menu slots={{ listbox: Listbox }}>
         <MenuItem onClick={createHandleMenuClick("Profile")}>Profile</MenuItem>
         <MenuItem onClick={createHandleMenuClick("Language settings")}>

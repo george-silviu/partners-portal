@@ -10,9 +10,7 @@ import "./sidebar.styles.scss";
 const Sidebar = () => {
   return (
     <section className="sidebar">
-      <h2 style={{ textAlign: "center", color: "#9EE493" }}>
-        Lead management app
-      </h2>
+      <h2 style={{ textAlign: "center", color: "#9EE493" }}>Partners Portal</h2>
       <List style={{ marginTop: "30px" }}>
         <ListItem
           button
