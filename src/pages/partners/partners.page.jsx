@@ -1,5 +1,7 @@
 import React from "react";
 
+import "./partners.styles.scss";
+
 const Partners = () => {
   return (
     <div className="partners">

@@ -1,14 +1,14 @@
 import React from "react";
+import AccountMenu from "../account-menu/account-menu.component";
 
-import UserAccount from "../user-account/user-account.component";
-
-import "./header.styles.scss";
+import { HeaderContainer, SidebarDisplayIcon } from "./header.styles";
 
 const Header = () => {
   return (
-    <div className="header">
-      <UserAccount />
-    </div>
+    <HeaderContainer>
+      <SidebarDisplayIcon fontSize="large" />
+      <AccountMenu />
+    </HeaderContainer>
   );
 };
 
