@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 import IconButton from "@mui/material/IconButton";
 
@@ -11,6 +12,8 @@ import Logout from "@mui/icons-material/Logout";
 import { StyledAccountBoxIcon } from "./account-menu.styles";
 
 const AccountMenu = () => {
+  const navigate = useNavigate();
+
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const open = Boolean(anchorEl);
@@ -73,7 +76,7 @@ const AccountMenu = () => {
           <Avatar fontSize="small" /> Profile
         </MenuItem>
 
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={() => navigate("/login")}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>

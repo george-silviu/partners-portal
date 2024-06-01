@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 import styled from "styled-components";
 
@@ -28,22 +28,38 @@ const sidebarItems = [
 ];
 
 const Sidebar = () => {
+  const location = useLocation();
+
   return (
     <SidebarContainer>
       <List>
         {sidebarItems.map((item) => (
-          <ListItem
-            button
-            key={item.name}
-            component={NavLink}
-            to={item.link}
-            style={{ color: "#9EE493" }}
-          >
-            <StyledListItemIcon style={{ minWidth: "40px" }}>
-              <item.Icon style={{ color: "#9EE493" }} />
-            </StyledListItemIcon>
-            <ListItemText primary={item.name} />
-          </ListItem>
+          <NavLink to={item.link} style={{ textDecoration: "none" }}>
+            <ListItem
+              button
+              key={item.name}
+              style={
+                location.pathname === item.link
+                  ? {
+                      borderRadius: "10px",
+                      backgroundColor: "#9EE493",
+                      color: "#2f4858",
+                    }
+                  : { color: "#9EE493", borderRadius: "10px" }
+              }
+            >
+              <StyledListItemIcon style={{ minWidth: "40px" }}>
+                <item.Icon
+                  style={
+                    location.pathname === item.link
+                      ? { color: "#2f4858" }
+                      : { color: "#9EE493" }
+                  }
+                />
+              </StyledListItemIcon>
+              <ListItemText primary={item.name} />
+            </ListItem>
+          </NavLink>
         ))}
       </List>
     </SidebarContainer>
