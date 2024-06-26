@@ -1,5 +1,5 @@
 {
-  "name": "partners-portal",
+  "name": "partners-portal-api",
   "version": "0.0.1",
   "description": "Simple lead management app api",
   "main": "index.js",

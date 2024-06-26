@@ -16,7 +16,6 @@ app.use(helmet());
 
 app.get("/users", async (req, res) => {
   try {
-    console.log("I am here!!!");
     const result = await pool.query(`SELECT * FROM users;`);
 
     console.log(result.rows);
