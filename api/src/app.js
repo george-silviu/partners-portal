@@ -2,28 +2,25 @@ require("dotenv").config();
 
 const express = require("express");
 const helmet = require("helmet");
+const cookieParser = require("cookie-parser");
 
 const { pool } = require("./services/postgres");
 
-//Create Express app
-const app = express();
+const app = express(); //Create Express app
 
-// Security Headers with Helmet
-app.use(helmet());
-
-// Body Parser Middleware
-// app.use(express.json());
-
-app.get("/users", async (req, res) => {
-  try {
-    const result = await pool.query(`SELECT * FROM users;`);
-
-    console.log(result.rows);
-
-    return res.status(200).json(result.rows);
-  } catch (error) {
-    console.log(error);
-  }
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`);
+  next();
 });
+
+app.use(helmet()); // Security Headers with Helmet
+
+app.use(express.json()); // Body Parser Middleware
+
+app.use(cookieParser()); //
+
+app.use("/api/auth", require("./routes/auth/auth.router")); // Authentication Routes
+
+app.use("/api/v1", require("./routes/v1")); // API Routes
 
 module.exports = app;
