@@ -4,23 +4,21 @@ const express = require("express");
 const helmet = require("helmet");
 const cookieParser = require("cookie-parser");
 
-const { pool } = require("./services/postgres");
-
-const app = express(); //Create Express app
+const app = express(); //initialize express app
 
 app.use((req, res, next) => {
   console.log(`${req.method} ${req.url}`);
   next();
 });
 
-app.use(helmet()); // Security Headers with Helmet
+app.use(helmet()); // add security headers
 
-app.use(express.json()); // Body Parser Middleware
+app.use(express.json()); // body parser middleware
 
-app.use(cookieParser()); //
+app.use(cookieParser()); //parse the http cookie
 
-app.use("/api/auth", require("./routes/auth/auth.router")); // Authentication Routes
+app.use("/api/auth", require("./routes/auth/auth.router")); // authentication routes
 
-app.use("/api/v1", require("./routes/v1")); // API Routes
+app.use("/api/v1", require("./routes/v1")); // API routes
 
 module.exports = app;

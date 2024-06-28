@@ -10,20 +10,33 @@ import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { ToastContainer, toast } from "react-toastify";
 
-import "./login.styles.scss";
+import { LoginContainer, LoginForm, LoginFormHeader } from "./login.styles";
 
 const Login = () => {
   const navigate = useNavigate();
 
+  const [username, setUsername] = React.useState();
+  const [password, setPassword] = React.useState();
   const [showPassword, setShowPassword] = React.useState(false);
 
   const handleLogin = () => {
-    // Perform login logic here
+    try {
+      // throw new Error("error");
+      toast.success("Login succesful!", { theme: "colored" });
+    } catch (error) {
+      toast.error("Login error!", { theme: "colored" });
+    }
 
+    // Perform login logic here
     // After successful login, navigate to /dashboard
-    navigate("/dashboard");
+    // navigate("/dashboard");
   };
+
+  // const handleUsernameChange = () =>
+
+  //   const handlePasswordChange = () =>
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -32,10 +45,11 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container">
-      <div className="login-form">
+    <LoginContainer>
+      <ToastContainer />
+      <LoginForm>
         <div>
-          <h1 className="login-form-header">Nice to see you again!</h1>
+          <LoginFormHeader>Nice to see you again!</LoginFormHeader>
           <p>Insert your credentials to jump back in. </p>
         </div>
 
@@ -84,7 +98,7 @@ const Login = () => {
         >
           Login
         </Button>
-      </div>
+      </LoginForm>
       <p>
         No account? Register{" "}
         <a href="/register">
@@ -92,7 +106,7 @@ const Login = () => {
           <b>here</b>.
         </a>
       </p>
-    </div>
+    </LoginContainer>
   );
 };
 
