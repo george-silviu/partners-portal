@@ -1,6 +1,8 @@
-import React from "react";
+//react imports
+import { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+//material ui components
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
@@ -10,16 +12,30 @@ import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+
+//toast component
 import { ToastContainer, toast } from "react-toastify";
 
+//components
 import { LoginContainer, LoginForm, LoginFormHeader } from "./login.styles";
 
 const Login = () => {
+  const userRef = useRef();
   const navigate = useNavigate();
 
-  const [username, setUsername] = React.useState();
-  const [password, setPassword] = React.useState();
-  const [showPassword, setShowPassword] = React.useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  // useEffect(() => {
+  //   userRef.current
+  // }, []);
+
+  useEffect(() => {
+    setErrorMessage("");
+  }, [username, password]);
 
   const handleLogin = () => {
     try {
@@ -47,6 +63,7 @@ const Login = () => {
   return (
     <LoginContainer>
       <ToastContainer />
+
       <LoginForm>
         <div>
           <LoginFormHeader>Nice to see you again!</LoginFormHeader>
@@ -70,6 +87,7 @@ const Login = () => {
           <InputLabel htmlFor="outlined-adornment-password">
             Password
           </InputLabel>
+
           <OutlinedInput
             id="outlined-adornment-password"
             type={showPassword ? "text" : "password"}

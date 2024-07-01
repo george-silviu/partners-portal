@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
-import styled from "styled-components";
+
+import { AppContainer } from "./app.styles";
 
 import Login from "./pages/login/login.page";
 import Register from "./pages/register/register.page";
@@ -34,17 +35,5 @@ function App() {
     </Routes>
   );
 }
-
-const AppContainer = styled.div`
-  height: 100vh;
-
-  display: grid;
-  grid-template-columns: 250px 1fr;
-  grid-template-rows: 60px 60px 1fr;
-  grid-template-areas:
-    "logo header"
-    "side breadcrumb"
-    "side main";
-`;
 
 export default App;
