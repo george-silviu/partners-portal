@@ -1,11 +1,17 @@
-import React from "react";
-import Breadcrumbs from "@mui/material/Breadcrumbs";
-import Link from "@mui/material/Link";
 import { useLocation } from "react-router-dom";
 
+import useAuth from "../../hooks/useAuth";
+
+//material ui components
+import Breadcrumbs from "@mui/material/Breadcrumbs";
+import Link from "@mui/material/Link";
+
+//styles
 import { BreadcrumbContainer } from "./breadcrumb.styles";
 
 const Breadcrumb = () => {
+  const { auth } = useAuth();
+
   const location = useLocation();
   const pathnames = location.pathname.split("/").filter((x) => x);
 
@@ -13,7 +19,8 @@ const Breadcrumb = () => {
     <BreadcrumbContainer>
       {location.pathname === "/dashboard" ? (
         <p style={{ color: "#9EE493" }}>
-          Nice to see you again, John Doe! Here are some insights for you!
+          Nice to see you again, {auth.username}! Here are some insights for
+          you! You are {auth.role}
         </p>
       ) : (
         <Breadcrumbs aria-label="breadcrumb" style={{ color: "#9EE493" }}>

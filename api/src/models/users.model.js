@@ -7,7 +7,8 @@ async function selectUserByUsername(username) {
         SELECT 
           id, 
           username,
-          password
+          password,
+          role
         FROM users 
         WHERE username = $1;`,
       [username]

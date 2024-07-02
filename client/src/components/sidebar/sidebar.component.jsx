@@ -33,11 +33,15 @@ const Sidebar = () => {
   return (
     <SidebarContainer>
       <List>
-        {sidebarItems.map((item) => (
-          <NavLink to={item.link} style={{ textDecoration: "none" }}>
+        {sidebarItems.map((item, index) => (
+          <NavLink
+            key={index}
+            to={item.link}
+            style={{ textDecoration: "none" }}
+          >
             <ListItem
               button
-              key={item.name}
+              key={index}
               style={
                 location.pathname === item.link
                   ? {

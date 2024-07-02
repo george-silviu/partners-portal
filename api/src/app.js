@@ -2,6 +2,7 @@ require("dotenv").config();
 
 const express = require("express");
 const helmet = require("helmet");
+const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
 const app = express(); //initialize express app
@@ -12,6 +13,12 @@ app.use((req, res, next) => {
 });
 
 app.use(helmet()); // add security headers
+
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+  })
+);
 
 app.use(express.json()); // body parser middleware
 

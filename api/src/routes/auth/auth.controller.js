@@ -22,7 +22,7 @@ async function handleLogin(req, res) {
     const foundUser = await selectUserByUsername(username);
     if (!foundUser) {
       return res
-        .status(400)
+        .status(401)
         .json({ error: "The provided username doesn't exist." });
     }
 
@@ -30,18 +30,19 @@ async function handleLogin(req, res) {
 
     const match = password === foundUser.password;
     if (!match) {
-      return res.status(400).json({ error: "The password is incorrect." });
+      return res.status(401).json({ error: "The password is incorrect." });
     }
 
-    //   const roles = await selectUserPrivilegesByUserId(foundUser.id);
+    const roles = [foundUser.role];
 
-    const accesToken = jwt.sign(
+    const accessToken = jwt.sign(
       {
         id: foundUser.id,
         username: foundUser.username,
+        roles: roles,
       },
       accessTokenSecret,
-      { expiresIn: "10h" }
+      { expiresIn: "1h" }
     );
 
     const refreshToken = jwt.sign(
@@ -62,7 +63,7 @@ async function handleLogin(req, res) {
 
       //send the acces token as a json
       //important : this token should be saved in memory
-      return res.status(200).json({ accesToken });
+      return res.status(200).json({ roles, accessToken });
     } catch (error) {
       console.error(error.message);
       return res.status(500).json({
@@ -73,6 +74,47 @@ async function handleLogin(req, res) {
   } catch (error) {
     console.error(error);
   }
+}
+
+async function handleRefresh(req, res) {
+  const cookies = req.cookies;
+
+  console.log(req.cookies);
+
+  if (!cookies?.jwt) {
+    return res.status(401).json({ error: "Cookie is not valid." });
+  }
+
+  const refreshToken = cookies.jwt;
+
+  const foundUser = await selectUserByRefreshToken(refreshToken);
+
+  if (!foundUser) {
+    console.log("User not found");
+    return res.status(403).json({
+      error:
+        "No user was found in the database with the provided refresh token.",
+    });
+  }
+
+  jwt.verify(refreshToken, refreshTokenSecret, async (err, decoded) => {
+    if (err || foundUser.username !== decoded.username) {
+      return res.sendStatus(403);
+    }
+
+    const roles = [foundUser.role];
+
+    const accessToken = jwt.sign(
+      {
+        id: foundUser.id,
+        username: foundUser.username,
+      },
+      accessTokenSecret,
+      { expiresIn: "1h" }
+    );
+
+    return res.json({ roles, accessToken });
+  });
 }
 
 async function handleLogout(req, res) {
@@ -114,4 +156,4 @@ async function handleLogout(req, res) {
   }
 }
 
-module.exports = { handleLogin, handleLogout };
+module.exports = { handleLogin, handleRefresh, handleLogout };

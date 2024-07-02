@@ -1,6 +1,8 @@
 //react imports
-import { useRef, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+
+import useAuth from "../../hooks/useAuth";
 
 //material ui components
 import TextField from "@mui/material/TextField";
@@ -19,45 +21,75 @@ import { ToastContainer, toast } from "react-toastify";
 //components
 import { LoginContainer, LoginForm, LoginFormHeader } from "./login.styles";
 
+//axios import
+import axios from "../../api/axios";
+const LOGIN_URL = "/api/auth/login";
+
 const Login = () => {
-  const userRef = useRef();
+  const { setAuth } = useAuth();
+
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.pathname || "/dashboard";
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [success, setSuccess] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-
-  // useEffect(() => {
-  //   userRef.current
-  // }, []);
 
   useEffect(() => {
     setErrorMessage("");
   }, [username, password]);
 
-  const handleLogin = () => {
-    try {
-      // throw new Error("error");
-      toast.success("Login succesful!", { theme: "colored" });
-    } catch (error) {
-      toast.error("Login error!", { theme: "colored" });
-    }
+  const handleUsernameChange = (e) => setUsername(e.target.value);
 
-    // Perform login logic here
-    // After successful login, navigate to /dashboard
-    // navigate("/dashboard");
-  };
-
-  // const handleUsernameChange = () =>
-
-  //   const handlePasswordChange = () =>
+  const handlePasswordChange = (e) => setPassword(e.target.value);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await toast.promise(
+        axios.post(LOGIN_URL, JSON.stringify({ username, password }), {
+          headers: {
+            "Content-Type": "application/json",
+            // withCredentials: true,
+          },
+        }),
+        {
+          pending: "Logging in...",
+          success: "Login succeded!",
+          error: "Login failed!",
+        }
+      );
+
+      const accessToken = response?.data?.accessToken;
+      const roles = response?.data?.roles;
+
+      setAuth({ username, password, roles, accessToken });
+
+      console.log({ username, password, roles, accessToken });
+
+      setUsername("");
+      setPassword("");
+
+      navigate(from, { replace: true });
+    } catch (error) {
+      if (!error?.response) {
+        setErrorMessage("Oouups! No server response");
+      } else if (error.response?.status === 400) {
+        setErrorMessage("Missing username or password");
+      } else if (error.response?.status === 401) {
+        setErrorMessage("Unauthorized");
+      } else {
+        setErrorMessage("Login failed!");
+      }
+    }
   };
 
   return (
@@ -70,26 +102,34 @@ const Login = () => {
           <p>Insert your credentials to jump back in. </p>
         </div>
 
+        <section>
+          <p>{errorMessage}</p>
+        </section>
+
         <TextField
-          required
           id="outlined-required"
-          label="Username"
           variant="outlined"
+          label="Username"
+          autoComplete="off"
+          required
+          onChange={handleUsernameChange}
+          value={username}
+          // error
         />
 
         <FormControl
-          sx={{ m: 1, width: "25ch" }}
-          required
           id="outlined-required"
+          required
           variant="outlined"
           type="password"
+          sx={{ m: 1, width: "25ch" }}
+          // error
         >
-          <InputLabel htmlFor="outlined-adornment-password">
-            Password
-          </InputLabel>
+          <InputLabel htmlFor="password">Password</InputLabel>
 
           <OutlinedInput
-            id="outlined-adornment-password"
+            id="password"
+            label="Password"
             type={showPassword ? "text" : "password"}
             endAdornment={
               <InputAdornment position="end">
@@ -103,7 +143,8 @@ const Login = () => {
                 </IconButton>
               </InputAdornment>
             }
-            label="Password"
+            onChange={handlePasswordChange}
+            value={password}
           />
         </FormControl>
 
@@ -118,7 +159,7 @@ const Login = () => {
         </Button>
       </LoginForm>
       <p>
-        No account? Register{" "}
+        Need an account? Register{" "}
         <a href="/register">
           {" "}
           <b>here</b>.
