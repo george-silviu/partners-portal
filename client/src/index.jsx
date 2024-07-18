@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import App from "./app";
 
-import { AuthProvider } from "./contexts/AuthProvider";
+import { AuthProvider } from "./contexts/auth.context";
 
 import "./index.css";
 import "react-toastify/dist/ReactToastify.css";

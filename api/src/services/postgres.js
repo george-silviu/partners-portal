@@ -25,7 +25,7 @@ const connectToDatabase = () => {
         done(); // Release the client back to the pool
         resolve(); // Database connection established successfully
         console.log(
-          `\x1b[33m Message: PostgreSQL database ${DATABASE} connection established successfully! \x1b[0m`
+          `Message: PostgreSQL database ${DATABASE} connection established successfully!`
         );
       }
     });

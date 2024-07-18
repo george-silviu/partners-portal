@@ -21,7 +21,7 @@ async function startServer() {
       const port = server.address().port;
 
       console.log(
-        `\x1b[33m Message: API listens for requests at http://${host}:${port} \x1b[0m`
+        `Message: API listens for requests at http://${host}:${port}`
       );
     });
   } catch (error) {
