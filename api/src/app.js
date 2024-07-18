@@ -5,27 +5,46 @@ const helmet = require("helmet");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
-const app = express(); //initialize express app
+const corsOptions = require("./config/cors.config");
+const credentials = require("./middleware/credentials.middleware");
+const checkJWT = require("./middleware/check-jwt.middleware");
 
+//initialize express app
+const app = express();
+
+//logger middleware
 app.use((req, res, next) => {
   console.log(`${req.method} ${req.url}`);
   next();
 });
 
-app.use(helmet()); // add security headers
+// add security headers
+app.use(helmet());
 
-app.use(
-  cors({
-    origin: "http://localhost:3000",
-  })
-);
+// Handle options credentials check - before CORS!
+// and fetch cookies credentials requirement
+app.use(credentials);
 
-app.use(express.json()); // body parser middleware
+app.use(cors(corsOptions));
 
-app.use(cookieParser()); //parse the http cookie
+// built-in middleware to handle urlencoded form data
+app.use(express.urlencoded({ extended: false }));
 
-app.use("/api/auth", require("./routes/auth/auth.router")); // authentication routes
+// built-in middleware for json
+app.use(express.json());
 
-app.use("/api/v1", require("./routes/v1")); // API routes
+//middleware for cookies
+app.use(cookieParser());
+
+app.use((req, res, next) => {
+  console.log("check the cookie first time", req.cookies);
+  next();
+});
+
+//public routes
+app.use("/api/auth", require("./routes/auth/auth.router"));
+
+//private routes
+app.use("/api/v1", checkJWT, require("./routes/v1")); // API routes
 
 module.exports = app;

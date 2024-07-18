@@ -56,8 +56,8 @@ async function handleLogin(req, res) {
 
       res.cookie("jwt", refreshToken, {
         httpOnly: true,
-        // sameSite: "None",
-        //secure: true, - in production, only serve the HTTPS
+        sameSite: "None",
+        //secure: true, //in production, only serve the HTTPS
         maxAge: 24 * 60 * 60 * 1000, //1 day
       });
 
@@ -79,12 +79,14 @@ async function handleLogin(req, res) {
 async function handleRefresh(req, res) {
   const cookies = req.cookies;
 
-  console.log(req.cookies);
+  console.log("checking the cookie...", req.cookies);
 
   if (!cookies?.jwt) {
+    console.log("stucks here.. 401");
     return res.status(401).json({ error: "Cookie is not valid." });
   }
 
+  console.log("refresh passed! jwt was found!");
   const refreshToken = cookies.jwt;
 
   const foundUser = await selectUserByRefreshToken(refreshToken);
@@ -119,6 +121,8 @@ async function handleRefresh(req, res) {
 
 async function handleLogout(req, res) {
   const cookies = req.cookies;
+
+  console.log("cookie is..", cookies);
 
   if (!cookies?.jwt) {
     console.log("No cookie sent on server.");
