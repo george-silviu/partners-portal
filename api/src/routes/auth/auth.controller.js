@@ -56,7 +56,7 @@ async function handleLogin(req, res) {
 
       res.cookie("jwt", refreshToken, {
         httpOnly: true,
-        sameSite: "None",
+        //sameSite: "None",
         //secure: true, //in production, only serve the HTTPS
         maxAge: 24 * 60 * 60 * 1000, //1 day
       });

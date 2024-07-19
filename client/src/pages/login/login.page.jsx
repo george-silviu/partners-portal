@@ -1,6 +1,6 @@
 //react imports
 import { useState, useEffect } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import useAuth from "../../hooks/useAuth";
 
@@ -58,8 +58,8 @@ const Login = () => {
         axios.post(LOGIN_URL, JSON.stringify({ username, password }), {
           headers: {
             "Content-Type": "application/json",
-            withCredentials: true,
           },
+          withCredentials: true,
         }),
         {
           pending: "Logging in...",
