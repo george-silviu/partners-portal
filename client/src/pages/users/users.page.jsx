@@ -1,25 +1,32 @@
 import { useState, useEffect } from "react";
-import axios from "../../api/axios";
-import useRefreshToken from "../../hooks/useRefreshToken";
+import { useNavigate, useLocation } from "react-router-dom";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 const Users = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const axiosPrivate = useAxiosPrivate();
   const [users, setUsers] = useState();
-  const refresh = useRefreshToken();
 
   useEffect(() => {
+    console.log("Component mounted");
     let isMounted = true;
     const controller = new AbortController();
 
-    //define function
     const getUsers = async () => {
       try {
-        const response = await axios.get("/api/v1/users", {
+        const response = await axiosPrivate.get("/api/v1/users", {
           signal: controller.signal,
         });
-        console.log(response.data);
+        console.log("Response received:", response.data);
         isMounted && setUsers(response.data);
       } catch (error) {
-        console.error(error);
+        if (error.name === "CanceledError") {
+          console.log("Request canceled");
+        } else {
+          console.error(error);
+          // navigate("/login", { state: { from: location }, replace: true });
+        }
       }
     };
 
@@ -28,6 +35,7 @@ const Users = () => {
 
     //cleanup
     return () => {
+      console.log("Cleanup called");
       isMounted = false;
       controller.abort();
     };
@@ -45,8 +53,6 @@ const Users = () => {
       ) : (
         <p>No users</p>
       )}
-
-      <button onClick={() => refresh()}>refresh</button>
     </article>
   );
 };

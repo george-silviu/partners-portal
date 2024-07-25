@@ -36,11 +36,6 @@ app.use(express.json());
 //middleware for cookies
 app.use(cookieParser());
 
-app.use((req, res, next) => {
-  console.log("check the cookie first time", req.cookies);
-  next();
-});
-
 //public routes
 app.use("/api/auth", require("./routes/auth/auth.router"));
 

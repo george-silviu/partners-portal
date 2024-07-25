@@ -42,13 +42,13 @@ async function handleLogin(req, res) {
         roles: roles,
       },
       accessTokenSecret,
-      { expiresIn: "1h" }
+      { expiresIn: "10s" }
     );
 
     const refreshToken = jwt.sign(
       { username: foundUser.username },
       refreshTokenSecret,
-      { expiresIn: "1d" }
+      { expiresIn: "15s" }
     );
 
     try {
@@ -79,14 +79,11 @@ async function handleLogin(req, res) {
 async function handleRefresh(req, res) {
   const cookies = req.cookies;
 
-  console.log("checking the cookie...", req.cookies);
-
   if (!cookies?.jwt) {
     console.log("stucks here.. 401");
     return res.status(401).json({ error: "Cookie is not valid." });
   }
 
-  console.log("refresh passed! jwt was found!");
   const refreshToken = cookies.jwt;
 
   const foundUser = await selectUserByRefreshToken(refreshToken);
