@@ -1,7 +1,4 @@
-import React from "react";
-
 import Dashboard from "../../pages/dashboard/dashboard.page";
-
 import "./main.styles.scss";
 
 const Main = () => {

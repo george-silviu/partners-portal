@@ -1,11 +1,9 @@
-import { AppContainer } from "./app.layout.styles";
-
 import { Outlet } from "react-router-dom";
-
 import Logo from "../logo/logo.component";
 import Header from "../header/header.component";
 import Sidebar from "../sidebar/sidebar.component";
 import Breadcrumb from "../breadcrumb/breadcrumb.component";
+import { AppContainer } from "./app.layout.styles";
 
 const AppLayout = () => {
   return (

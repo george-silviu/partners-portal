@@ -9,36 +9,17 @@ const Users = () => {
   const [users, setUsers] = useState();
 
   useEffect(() => {
-    console.log("Component mounted");
-    let isMounted = true;
-    const controller = new AbortController();
-
     const getUsers = async () => {
       try {
-        const response = await axiosPrivate.get("/api/v1/users", {
-          signal: controller.signal,
-        });
-        console.log("Response received:", response.data);
-        isMounted && setUsers(response.data);
+        const response = await axiosPrivate.get("/api/v1/users");
+        setUsers(response.data);
       } catch (error) {
-        if (error.name === "CanceledError") {
-          console.log("Request canceled");
-        } else {
-          console.error(error);
-          // navigate("/login", { state: { from: location }, replace: true });
-        }
+        console.error(error);
+        navigate("/login", { state: { from: location }, replace: true });
       }
     };
 
-    //call function
     getUsers();
-
-    //cleanup
-    return () => {
-      console.log("Cleanup called");
-      isMounted = false;
-      controller.abort();
-    };
   }, []);
 
   return (

@@ -50,7 +50,8 @@ async function selectUserByRefreshToken(refreshToken) {
       `
         SELECT 
           id, 
-          username
+          username,
+          role
         FROM users 
         WHERE token = $1;`,
       [refreshToken]

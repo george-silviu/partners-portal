@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import IconButton from "@mui/material/IconButton";
@@ -11,10 +11,19 @@ import Logout from "@mui/icons-material/Logout";
 
 import { StyledAccountBoxIcon } from "./account-menu.styles";
 
+import useLogout from "../../hooks/useLogout";
+
 const AccountMenu = () => {
   const navigate = useNavigate();
+  const logout = useLogout();
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const signOut = async () => {
+    await logout();
+    console.log("logging out");
+    navigate("/login");
+  };
+
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const open = Boolean(anchorEl);
 
@@ -76,7 +85,7 @@ const AccountMenu = () => {
           <Avatar fontSize="small" /> Profile
         </MenuItem>
 
-        <MenuItem onClick={() => navigate("/login")}>
+        <MenuItem onClick={signOut}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>

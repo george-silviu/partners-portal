@@ -1,10 +1,6 @@
-//react imports
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
-import useAuth from "../../hooks/useAuth";
-
-//material ui components
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
@@ -15,14 +11,13 @@ import FormControl from "@mui/material/FormControl";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
-//toast component
 import { ToastContainer, toast } from "react-toastify";
 
-//components
 import { LoginContainer, LoginForm, LoginFormHeader } from "./login.styles";
 
-//axios import
 import axios from "../../api/axios";
+import useAuth from "../../hooks/useAuth";
+
 const LOGIN_URL = "/api/auth/login";
 
 const Login = () => {
@@ -42,11 +37,8 @@ const Login = () => {
   }, [username, password]);
 
   const handleUsernameChange = (e) => setUsername(e.target.value);
-
   const handlePasswordChange = (e) => setPassword(e.target.value);
-
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
@@ -73,7 +65,12 @@ const Login = () => {
 
       setAuth({ username, password, roles, accessToken });
 
-      console.log({ username, password, roles, accessToken });
+      console.log("User logged in.. ", {
+        username,
+        password,
+        roles,
+        accessToken,
+      });
 
       setUsername("");
       setPassword("");
@@ -94,16 +91,23 @@ const Login = () => {
 
   return (
     <LoginContainer>
-      <ToastContainer />
+      <ToastContainer theme="dark" />
 
       <LoginForm>
+        <img
+          src="/partners-portal_logo.png"
+          alt="logo"
+          style={{ borderRadius: "15px" }}
+        />
         <div>
           <LoginFormHeader>Nice to see you again!</LoginFormHeader>
           <p>Insert your credentials to jump back in. </p>
         </div>
 
         <section>
-          <p>{errorMessage}</p>
+          <bold>
+            <p style={{ color: "red" }}>{errorMessage}</p>
+          </bold>
         </section>
 
         <TextField
@@ -159,7 +163,7 @@ const Login = () => {
         </Button>
       </LoginForm>
       <p>
-        Need an account? Register{" "}
+        Need an account? Apply for registration{" "}
         <a href="/register">
           {" "}
           <b>here</b>.

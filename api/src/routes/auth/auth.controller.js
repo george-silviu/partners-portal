@@ -42,13 +42,13 @@ async function handleLogin(req, res) {
         roles: roles,
       },
       accessTokenSecret,
-      { expiresIn: "10s" }
+      { expiresIn: "10m" }
     );
 
     const refreshToken = jwt.sign(
       { username: foundUser.username },
       refreshTokenSecret,
-      { expiresIn: "15s" }
+      { expiresIn: "1d" }
     );
 
     try {
@@ -80,7 +80,6 @@ async function handleRefresh(req, res) {
   const cookies = req.cookies;
 
   if (!cookies?.jwt) {
-    console.log("stucks here.. 401");
     return res.status(401).json({ error: "Cookie is not valid." });
   }
 
@@ -89,7 +88,6 @@ async function handleRefresh(req, res) {
   const foundUser = await selectUserByRefreshToken(refreshToken);
 
   if (!foundUser) {
-    console.log("User not found");
     return res.status(403).json({
       error:
         "No user was found in the database with the provided refresh token.",
@@ -101,7 +99,11 @@ async function handleRefresh(req, res) {
       return res.sendStatus(403);
     }
 
+    console.log(foundUser);
+
     const roles = [foundUser.role];
+
+    console.log("roles", roles);
 
     const accessToken = jwt.sign(
       {
@@ -109,7 +111,7 @@ async function handleRefresh(req, res) {
         username: foundUser.username,
       },
       accessTokenSecret,
-      { expiresIn: "1h" }
+      { expiresIn: "10m" }
     );
 
     return res.json({ roles, accessToken });
@@ -117,19 +119,14 @@ async function handleRefresh(req, res) {
 }
 
 async function handleLogout(req, res) {
+  //on client also delete the accessToken
+
   const cookies = req.cookies;
-
-  console.log("cookie is..", cookies);
-
-  if (!cookies?.jwt) {
-    console.log("No cookie sent on server.");
-    return res.sendStatus(204); //No content
-  }
-
+  if (!cookies?.jwt) return res.sendStatus(204); //No content
   const refreshToken = cookies.jwt;
 
+  //is refreshToken in db?
   const foundUser = await selectUserByRefreshToken(refreshToken);
-
   if (!foundUser) {
     res.clearCookie("jwt", {
       httpOnly: true,
@@ -137,10 +134,10 @@ async function handleLogout(req, res) {
       // secure: true, - in production, only serve the HTTPS
       maxAge: 24 * 60 * 60 * 1000,
     });
-    console.log("No user found. The cookie was cleared.");
     return res.sendStatus(204); //No content
   }
 
+  //delete refreshToken in db
   const deleteResult = await deleteUserRefreshToken(foundUser.username);
 
   if (deleteResult) {
@@ -149,6 +146,7 @@ async function handleLogout(req, res) {
       sameSite: "None",
       //secure: true, - in production, only serve the HTTPS
     });
+
     return res.sendStatus(204); //No content
   } else {
     return res.status(500).json({
