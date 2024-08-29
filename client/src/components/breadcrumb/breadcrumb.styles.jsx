@@ -1,11 +1,13 @@
 import styled from "styled-components";
 
-import { darkBlue } from "../../styles/global.styles";
+import { containerBackground } from "../../styles/global.styles";
 
 export const BreadcrumbContainer = styled.div`
   grid-area: breadcrumb;
 
-  background-color: ${darkBlue};
+  border: 1px solid #6246ea;
+
+  background-color: ${containerBackground};
 
   display: flex;
   justify-content: flex-start;

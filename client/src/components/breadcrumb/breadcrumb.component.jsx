@@ -3,8 +3,7 @@ import { useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 
 //material ui components
-import Breadcrumbs from "@mui/material/Breadcrumbs";
-import Link from "@mui/material/Link";
+import { Breadcrumbs, Link } from "@mui/material";
 
 //styles
 import { BreadcrumbContainer } from "./breadcrumb.styles";
@@ -18,9 +17,9 @@ const Breadcrumb = () => {
   return (
     <BreadcrumbContainer>
       {location.pathname === "/dashboard" ? (
-        <p style={{ color: "#9EE493" }}>
-          Nice to see you again, {auth.username}! Here are some insights for
-          you! You are {auth.role}
+        <p style={{ color: "#2b2c34" }}>
+          Nice to see you again, {auth?.username}! Your role is {auth?.roles[0]}
+          .{console.log(auth)}
         </p>
       ) : (
         <Breadcrumbs aria-label="breadcrumb" style={{ color: "#9EE493" }}>
@@ -39,7 +38,7 @@ const Breadcrumb = () => {
                 color="text.primary"
                 href={to}
                 aria-current="page"
-                style={{ color: "#9EE493" }}
+                style={{ color: "#2b2c34" }}
                 key={to}
               >
                 {capitalizedValue}
@@ -49,7 +48,7 @@ const Breadcrumb = () => {
                 underline="hover"
                 color="inherit"
                 href={to}
-                style={{ color: "#9EE493" }}
+                style={{ color: "#2b2c34" }}
                 key={to}
               >
                 {capitalizedValue}

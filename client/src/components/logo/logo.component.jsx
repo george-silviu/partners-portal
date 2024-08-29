@@ -1,5 +1,3 @@
-import React from "react";
-
 import { LogoContainer, LogoText } from "./logo.styles";
 
 const Logo = () => {

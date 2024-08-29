@@ -1,4 +1,3 @@
-import React from "react";
 import AccountMenu from "../account-menu/account-menu.component";
 
 import { HeaderContainer, SidebarDisplayIcon } from "./header.styles";

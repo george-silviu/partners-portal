@@ -1,13 +1,15 @@
 import styled from "styled-components";
 
-import { ListItemIcon, ListItem } from "@mui/material";
+import { ListItemIcon } from "@mui/material";
 
-import { lightGreen, darkBlue } from "../../styles/global.styles";
+import { containerBackground, iconColor } from "../../styles/global.styles";
 
 export const SidebarContainer = styled.div`
+  border: 1px solid #6246ea;
+
   grid-area: side;
 
-  background-color: ${darkBlue};
+  background-color: ${containerBackground};
 
   display: flex;
   flex-direction: column;
@@ -17,16 +19,6 @@ export const SidebarContainer = styled.div`
   border-radius: 5px;
 `;
 
-export const ActiveLink = styled(ListItem)`
-  background-color: ${lightGreen};
-  color: ${lightGreen};
-
-  &:hover {
-    background-color: ${lightGreen};
-    color: ${lightGreen};
-  }
-`;
-
 export const StyledListItemIcon = styled(ListItemIcon)`
-  color: ${darkBlue};
+  color: ${containerBackground};
 `;

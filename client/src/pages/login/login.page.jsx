@@ -65,12 +65,12 @@ const Login = () => {
 
       setAuth({ username, password, roles, accessToken });
 
-      console.log("User logged in.. ", {
-        username,
-        password,
-        roles,
-        accessToken,
-      });
+      // console.log("User logged in.. ", {
+      //   username,
+      //   password,
+      //   roles,
+      //   accessToken,
+      // });
 
       setUsername("");
       setPassword("");
@@ -105,9 +105,9 @@ const Login = () => {
         </div>
 
         <section>
-          <bold>
+          <strong>
             <p style={{ color: "red" }}>{errorMessage}</p>
-          </bold>
+          </strong>
         </section>
 
         <TextField
@@ -155,7 +155,8 @@ const Login = () => {
         <Button
           variant="contained"
           style={{
-            backgroundColor: "#336699",
+            backgroundColor: "#6246ea",
+            color: "#fffffe",
           }}
           onClick={handleLogin}
         >

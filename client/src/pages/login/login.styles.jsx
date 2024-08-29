@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
-import { lightGreen } from "../../styles/global.styles";
+import { background, containerBackground } from "../../styles/global.styles";
 
 export const LoginContainer = styled.div`
-  background-color: #ffffff;
+  background-color: ${background};
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -25,7 +25,7 @@ export const LoginForm = styled.div`
   max-width: 90vw;
   height: auto;
   min-height: 40vh;
-  background-color: #2cc3e3;
+  background-color: ${containerBackground};
   border-radius: 10px;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
   padding: 20px;

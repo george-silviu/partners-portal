@@ -2,12 +2,13 @@ import styled from "styled-components";
 
 import ViewHeadlineIcon from "@mui/icons-material/ViewHeadline";
 
-import { lightGreen, darkBlue } from "../../styles/global.styles";
+import { iconColor, containerBackground } from "../../styles/global.styles";
 
 export const HeaderContainer = styled.div`
   grid-area: header;
 
-  background-color: ${darkBlue};
+  border: 1px solid #6246ea;
+  background-color: ${containerBackground};
 
   display: flex;
   justify-content: space-between;
@@ -19,6 +20,6 @@ export const HeaderContainer = styled.div`
 `;
 
 export const SidebarDisplayIcon = styled(ViewHeadlineIcon)`
-  color: ${lightGreen};
+  color: ${iconColor};
   cursor: pointer;
 `;

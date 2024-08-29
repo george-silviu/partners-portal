@@ -1,9 +1,7 @@
-import React from "react";
-
-import "./card.styles.scss";
+import { CardContainer } from "./card.styles.jsx";
 
 const Card = () => {
-  return <div className="card"></div>;
+  return <CardContainer></CardContainer>;
 };
 
 export default Card;

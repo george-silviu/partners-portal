@@ -1,9 +1,5 @@
-import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
-
-import styled from "styled-components";
-
-import { List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
+import { List, ListItem, ListItemText } from "@mui/material";
 
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import GroupIcon from "@mui/icons-material/Group";
@@ -12,11 +8,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import SchoolIcon from "@mui/icons-material/School";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 
-import { SidebarContainer } from "./sidebar.styles";
-
-const StyledListItemIcon = styled(ListItemIcon)`
-  color: #9ee493;
-`;
+import { SidebarContainer, StyledListItemIcon } from "./sidebar.styles";
 
 const sidebarItems = [
   { name: "Dashboard", link: "/dashboard", Icon: DashboardIcon },
@@ -46,18 +38,18 @@ const Sidebar = () => {
                 location.pathname === item.link
                   ? {
                       borderRadius: "10px",
-                      backgroundColor: "#9EE493",
-                      color: "#2f4858",
+                      backgroundColor: "#6246ea",
+                      color: "#fffffe",
                     }
-                  : { color: "#9EE493", borderRadius: "10px" }
+                  : { color: "#2b2c34", borderRadius: "10px" }
               }
             >
               <StyledListItemIcon style={{ minWidth: "40px" }}>
                 <item.Icon
                   style={
                     location.pathname === item.link
-                      ? { color: "#2f4858" }
-                      : { color: "#9EE493" }
+                      ? { color: "#e45858" }
+                      : { color: "#e45858" }
                   }
                 />
               </StyledListItemIcon>

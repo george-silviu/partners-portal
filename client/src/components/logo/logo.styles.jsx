@@ -1,11 +1,13 @@
 import styled from "styled-components";
 
-import { lightGreen, darkBlue } from "../../styles/global.styles";
+import { textColor, containerBackground } from "../../styles/global.styles";
 
 export const LogoContainer = styled.div`
   grid-area: logo;
 
-  background-color: ${darkBlue};
+  border: 1px solid #6246ea;
+
+  background-color: ${containerBackground};
 
   display: flex;
   justify-content: center;
@@ -16,5 +18,5 @@ export const LogoContainer = styled.div`
 `;
 
 export const LogoText = styled.h2`
-  color: ${lightGreen};
+  color: ${textColor};
 `;

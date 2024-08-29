@@ -1,15 +1,15 @@
 import Card from "../../components/card/card.component";
+
+import UnderConstruction from "../../components/under-construction/under-construction.component";
+
 import "./dashboard.styles.scss";
 
 const Dashboard = () => {
   return (
     <div className="dashboard">
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
+      <div>
+        <UnderConstruction />
+      </div>
     </div>
   );
 };
